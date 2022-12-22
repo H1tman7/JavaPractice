@@ -1,0 +1,169 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > RPN</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.example</a>
+</div>
+
+<h1>Coverage Summary for Class: RPN (org.example)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RPN</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/39)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.example;
+&nbsp;import java.util.Scanner;
+&nbsp;import java.util.Stack;
+&nbsp;
+<b class="nc">&nbsp;public class RPN {</b>
+&nbsp;    public static void main(String[] args) {
+<b class="nc">&nbsp;        System.out.print(&quot;Введите обратную польскую нотацию: &quot;);</b>
+<b class="nc">&nbsp;        Scanner in = new Scanner(System.in);</b>
+<b class="nc">&nbsp;        String expression = in.nextLine();</b>
+<b class="nc">&nbsp;        Stack&lt;Double&gt; numbers = new Stack&lt;Double&gt;();</b>
+<b class="nc">&nbsp;        char[] tokens = expression.toCharArray();</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            for (int i = 0; i &lt; tokens.length; i++) {</b>
+<b class="nc">&nbsp;                if (tokens[i] == &#39; &#39;)</b>
+<b class="nc">&nbsp;                    continue;</b>
+&nbsp;
+<b class="nc">&nbsp;                String numberSymbols = &quot;0123456789.&quot;;</b>
+<b class="nc">&nbsp;                String operatorsAvailable = &quot;+-*/&quot;;</b>
+<b class="nc">&nbsp;                if (numberSymbols.contains(&quot;&quot; + tokens[i])) {</b>
+<b class="nc">&nbsp;                    StringBuilder sbuf = new StringBuilder();</b>
+&nbsp;
+<b class="nc">&nbsp;                    while (i &lt; tokens.length &amp;&amp; numberSymbols.contains(&quot;&quot; + tokens[i])) {</b>
+<b class="nc">&nbsp;                        sbuf.append(tokens[i++]);</b>
+&nbsp;                    }
+&nbsp;                    try {
+<b class="nc">&nbsp;                        numbers.push(Double.parseDouble(sbuf.toString()));</b>
+<b class="nc">&nbsp;                    } catch (Exception ex) {</b>
+<b class="nc">&nbsp;                        throw new Exception(&quot;Ошибка парсинга числа!&quot;);</b>
+<b class="nc">&nbsp;                    }</b>
+<b class="nc">&nbsp;                    i--;</b>
+<b class="nc">&nbsp;                } else if (operatorsAvailable.contains(&quot;&quot; + tokens[i])) {</b>
+<b class="nc">&nbsp;                    if (numbers.size() &lt; 2) {</b>
+<b class="nc">&nbsp;                        throw new Exception(&quot;Пустой стек!&quot;);</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                    numbers.push(calculate(tokens[i], numbers.pop(), numbers.pop()));</b>
+&nbsp;                } else {
+<b class="nc">&nbsp;                    throw new Exception(&quot;Неправильный символ!&quot;);</b>
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;            if (numbers.size() &gt; 1) {</b>
+<b class="nc">&nbsp;                throw new Exception(&quot;Неправильное выражение!&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            System.out.println(numbers.pop());</b>
+<b class="nc">&nbsp;        } catch(Exception e) {</b>
+<b class="nc">&nbsp;            System.out.println(e.getMessage());</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;    public static double calculate(char op, double b, double a) throws Exception
+&nbsp;    {
+<b class="nc">&nbsp;        switch (op)</b>
+&nbsp;        {
+&nbsp;            case &#39;+&#39;:
+<b class="nc">&nbsp;                return a + b;</b>
+&nbsp;            case &#39;-&#39;:
+<b class="nc">&nbsp;                return a - b;</b>
+&nbsp;            case &#39;*&#39;:
+<b class="nc">&nbsp;                return a * b;</b>
+&nbsp;            case &#39;/&#39;:
+<b class="nc">&nbsp;                if (b == 0)</b>
+<b class="nc">&nbsp;                    throw new Exception(&quot;Деление на ноль&quot;);</b>
+<b class="nc">&nbsp;                return a / b;</b>
+&nbsp;            default:
+<b class="nc">&nbsp;                throw new Exception(&quot;Неправильный символ!&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-12-22 18:39</div>
+</div>
+</body>
+</html>
